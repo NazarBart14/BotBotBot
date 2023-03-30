@@ -33,12 +33,8 @@ namespace BotBotBot
 
             MessagesListBox.ItemsSource = MessagesListBoxItem;
             HistoryListBox.ItemsSource = HistoryListBoxItem;
-
-            //// Add some sample items to lstBox1
-            //MessagesListBoxItem.Add("Item 1");
-            //MessagesListBoxItem.Add("Item 2");
-            //MessagesListBoxItem.Add("Item 3");
         }
+
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             string userInput = UserInputTextBox.Text;
@@ -61,24 +57,30 @@ namespace BotBotBot
         {
             string formattedMessage = string.Format("{0}: {1}", sender, message);
 
-            MessagesListBox.Items.Add(formattedMessage);
+            MessagesListBoxItem.Add(formattedMessage);
 
             // Scroll to the bottom of the listbox to show the latest message
-            MessagesListBox.ScrollIntoView(MessagesListBox.Items[MessagesListBox.Items.Count - 1]);
+            MessagesListBox.ScrollIntoView(MessagesListBoxItem[MessagesListBoxItem.Count - 1]);
         }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-           
+            // Loop through the selected items in MessagesListBox
             foreach (string selectedItem in MessagesListBox.SelectedItems)
             {
+                // Add the selected item to the HistoryListBoxItem collection
                 HistoryListBoxItem.Add(selectedItem);
             }
 
-           
+            // Refresh the display of the HistoryListBox
+            HistoryListBox.Items.Refresh();
+
+            // Remove the selected items from the MessagesListBoxItem collection
             while (MessagesListBox.SelectedItems.Count > 0)
             {
                 MessagesListBoxItem.Remove((string)MessagesListBox.SelectedItems[0]);
             }
         }
+
     }
 }

@@ -3,70 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BotBotBot"
+        xmlns:local="clr-namespace:BotBotBot" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" Background="#FF20B2AA">
     <Grid>
 
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*" />
-            <ColumnDefinition Width="150*" />
-            <!--Filter blank-->
-            <!--<ColumnDefinition Width="100*" />-->
-        </Grid.ColumnDefinitions>
-
-        <ListBox x:Name="MessagesListBox" Grid.Row="0" Grid.Column="1" Margin="5"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="5">
-            <TextBox x:Name="UserInputTextBox" Width="300" Margin="5"/>
-            <Button x:Name="SendButton" Content="Send" Width="75" Margin="5" Click="SendButton_Click"/>
-        </StackPanel>
-
-
-
-
-        <!--Recommendations-->
-
-        <!--
-
-        <ListBox Grid.Row="1" Background="#FF778899" Margin="10,0,0,20" Height="Auto" Width="Auto" ItemsSource="{Binding Movies}" Grid.Column="1">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" />
-                        <TextBlock Text="{Binding Genre}" FontStyle="Italic" />
-                        <TextBlock Text="{Binding Year}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>-->
-
-
-
-
-        <!--Search history повино відповідати за збереження в історію але чогось не працює-->
-
-        <ListBox x:Name="HistoryListBox" Grid.Row="0" Grid.Column="0"  Background="#FF778899"  Height="Auto" Width="Auto" Grid.ColumnSpan="2" Margin="1,0,665,0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding SearchTerm}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="400,0,0,0">
-            <!--<Button x:Name="DeletButton" Content="Delet" Width="60" Margin="10" Click="DeletButton_Click"/>-->
-            <Button x:Name="SaveButton" Content="Save" Width="60" Margin="10" Click="SaveButton_Click"/>
-            
-        </StackPanel>
-
-
-
-
+        <Expander x:Name="menuExpander" HorizontalAlignment="Right" IsExpanded="False" Background="{DynamicResource MaterialDesignPaper}" Padding="0" ExpandDirection="Left"
+          MaxWidth="200">
+            <Expander.Triggers>
+                <EventTrigger RoutedEvent="Expander.Expanded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.3" To="400" Storyboard.TargetProperty="(FrameworkElement.MaxWidth)" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Expander.Collapsed">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.3" To="200" Storyboard.TargetProperty="(FrameworkElement.MaxWidth)" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Expander.Triggers>
+            <ListBox Margin="0,0,0,480" >
+                <Button x:Name="LookingButton" Content="I'm looking" Click="LookingButton_Click"/>
+                <Button x:Name="LookedButton" Content="I've looked" Click="LookedButton_Click"/>
+                <Button x:Name="PlanningButton" Content="I'm planning" Click="PlanningButton_Click"/>
+            </ListBox>
+        </Expander>
     </Grid>
 </Window>

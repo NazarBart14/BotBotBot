@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Data.SqlClient;
+
 
 namespace BotBotBot
 {
@@ -21,66 +24,32 @@ namespace BotBotBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<string> MessagesListBoxItem;
-        private ObservableCollection<string> HistoryListBoxItem;
-
+       
         public MainWindow()
         {
             InitializeComponent();
-
-            MessagesListBoxItem = new ObservableCollection<string>();
-            HistoryListBoxItem = new ObservableCollection<string>();
-
-            MessagesListBox.ItemsSource = MessagesListBoxItem;
-            HistoryListBox.ItemsSource = HistoryListBoxItem;
+            
         }
 
-        private void SendButton_Click(object sender, RoutedEventArgs e)
+        private void LookingButton_Click(object sender, RoutedEventArgs e)
         {
-            string userInput = UserInputTextBox.Text;
-
-            // Add user input to the list of messages
-            AddMessage("You", userInput);
-
-            // TODO: Send user input to the bot and get bot's response
-
-            string botResponse = "Bot's response";
-
-            // Add bot response to the list of messages
-            AddMessage("Bot", botResponse);
-
-            // Clear user input
-            UserInputTextBox.Text = "";
+            LookingWindow lookingWindow = new LookingWindow();
+            lookingWindow.Owner = this;
+            lookingWindow.Show();
         }
 
-        private void AddMessage(string sender, string message)
+        private void LookedButton_Click(object sender, RoutedEventArgs e)
         {
-            string formattedMessage = string.Format("{0}: {1}", sender, message);
-
-            MessagesListBoxItem.Add(formattedMessage);
-
-            // Scroll to the bottom of the listbox to show the latest message
-            MessagesListBox.ScrollIntoView(MessagesListBoxItem[MessagesListBoxItem.Count - 1]);
+            LookingWindow lookingWindow = new LookingWindow();
+            lookingWindow.Owner = this;
+            lookingWindow.Show();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void PlanningButton_Click(object sender, RoutedEventArgs e)
         {
-            // Loop through the selected items in MessagesListBox
-            foreach (string selectedItem in MessagesListBox.SelectedItems)
-            {
-                // Add the selected item to the HistoryListBoxItem collection
-                HistoryListBoxItem.Add(selectedItem);
-            }
-
-            // Refresh the display of the HistoryListBox
-            HistoryListBox.Items.Refresh();
-
-            // Remove the selected items from the MessagesListBoxItem collection
-            while (MessagesListBox.SelectedItems.Count > 0)
-            {
-                MessagesListBoxItem.Remove((string)MessagesListBox.SelectedItems[0]);
-            }
+            LookingWindow lookingWindow = new LookingWindow();
+            lookingWindow.Owner = this;
+            lookingWindow.Show();
         }
-
     }
 }
